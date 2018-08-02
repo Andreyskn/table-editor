@@ -5,16 +5,27 @@ export default class ContextMenu extends Component {
     const onDeleteColumn = this.props.onDeleteColumn;
     const onDeleteRow = this.props.onDeleteRow;
     const cellAddress = this.props.cellAddress.split(',');
+    const rowId = parseInt(cellAddress[0], 10);
+    const columnId = parseInt(cellAddress[1], 10);
+    const onColorMenuOpen = this.props.onColorMenuOpen;
 
     return(
       <div className='context-menu'>
         <button
-          onClick={() => onDeleteColumn(parseInt(cellAddress[1], 10))}>
+          onClick={() => onDeleteColumn(columnId)}>
           Delete column
         </button>
         <button 
-          onClick={() => onDeleteRow(parseInt(cellAddress[0], 10))}>
+          onClick={() => onDeleteRow(rowId)}>
           Delete row
+        </button>
+        <button
+          onClick={() => onColorMenuOpen(this.props.cellAddress, 'text')}>
+          Color
+        </button>
+        <button
+          onClick={() => onColorMenuOpen(this.props.cellAddress, 'fill')}>
+          Fill
         </button>
       </div>
     );

@@ -12,8 +12,13 @@ export default class Table extends Component {
       deletedColumn,
       onDeleteRow,
       deletedRow,
-      onCellMount,
-      onCellDestroy
+      colorMenuAddress,
+      onColorMenuOpen,
+      colorMenuType,
+      cellsStyleMap,
+      onStyleChange,
+      onColorMenuClose,
+      onBackClick,
     } = this.props;
 
     return (
@@ -31,9 +36,14 @@ export default class Table extends Component {
                       onRightClick={onRightClick}
                       onDeleteColumn={onDeleteColumn}
                       onDeleteRow={onDeleteRow}
-                      onCellMount={onCellMount}
-                      onCellDestroy={onCellDestroy}
-                      >
+                      colorMenuAddress={colorMenuAddress}
+                      onColorMenuOpen={onColorMenuOpen}
+                      colorMenuType={colorMenuType}
+                      cellsStyleMap={cellsStyleMap}
+                      onStyleChange={onStyleChange}
+                      onColorMenuClose={onColorMenuClose}
+                      onBackClick={onBackClick}
+                    >
                     </Cell>
                   : null
                 )}

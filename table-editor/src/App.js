@@ -3,12 +3,10 @@ import './App.css';
 import Table from './table';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.initialGrid = [0, 1, 2];
-    this.cellsMap = [];
-
 
     this.state = {
       rows: [0, 1, 2],
@@ -16,13 +14,15 @@ class App extends Component {
       deletedRow: null,
       deletedColumn: null,
       menuAddress: null,
-      cellsMap: [],
+      colorMenuAddress: null,
+      colorMenuType: null,
+      cellsStyleMap: [],
     };
   }
 
   componentDidMount() {
     window.addEventListener('click', (e) => {
-      if (this.state.menuAddress) {
+      if (this.state.menuAddress && e.target.id !== 'back') {
         this.setState({
           menuAddress: null
         });
@@ -30,19 +30,16 @@ class App extends Component {
     });
   }
 
-  generateCellsMap = (cellAddress) => {
-    this.cellsMap.push(cellAddress);
-
+  resetTable = () => {
     this.setState({
-      cellsMap: this.cellsMap
-    });
-  }
-
-  filterCellsMap = (cellAddress) => {
-    this.cellsMap = this.cellsMap.filter(el => `${el}` !== cellAddress);
-
-    this.setState({
-      cellsMap: this.cellsMap
+      rows: this.initialGrid,
+      columns: this.initialGrid,
+      deletedRow: null,
+      deletedColumn: null,
+      menuAddress: null,
+      colorMenuAddress: null,
+      colorMenuType: null,
+      cellsStyleMap: [],
     });
   }
 
@@ -76,15 +73,6 @@ class App extends Component {
     });
   }
 
-  resetTable = () => {
-    this.setState({
-      rows: this.initialGrid,
-      columns: this.initialGrid,
-      deletedColumn: null,
-      menuAddress: null
-    });
-  }
-
   openContextMenu = (event, cellAddress) => {
     event.preventDefault();
 
@@ -93,8 +81,49 @@ class App extends Component {
     });
   }
 
+  openColorMenu = (address, type) => {
+    this.setState({
+      colorMenuAddress: address,
+      colorMenuType: type,
+      menuAddress: null
+    });
+  }
+
+  closeColorMenu = () => {
+    this.setState({ colorMenuAddress: null });
+  }
+
+  backFromColorMenu = (address) => {
+    this.setState({ 
+      menuAddress: address,
+      colorMenuAddress: null
+    });
+  }
+
+  changeCellStyle = (cell, type, color) => {
+    const styledCells = this.state.cellsStyleMap;
+    const inArray = styledCells.filter(el => el.address === cell)[0];
+    let newElt = {};
+
+    if (inArray) {
+      inArray[type] = color;
+
+      this.setState({
+        cellsStyleMap: [...this.state.cellsStyleMap.filter(el => el.address !== cell), inArray],
+      });
+    } else {
+      newElt.address = cell;
+      newElt[type] = color;
+
+      this.setState({
+        cellsStyleMap: [...this.state.cellsStyleMap, newElt],
+      });
+    }
+  }
+
+
   render() {
-    console.log(this.state.cellsMap);
+    // console.log(this.state.menuAddress);
 
     return (
       <div className="App">
@@ -102,8 +131,6 @@ class App extends Component {
           <button onClick={this.addColumn}>Add column</button>
           <button onClick={this.addRow}>Add row</button>
           <button onClick={this.resetTable}>Reset table</button>
-          <input type="color"/>
-          <input type="color"/>
         </header>
         <main>
           <Table {...this.state}
@@ -111,7 +138,12 @@ class App extends Component {
             onDeleteColumn={this.deleteColumn}
             onDeleteRow={this.deleteRow}
             onCellMount={this.generateCellsMap}
-            onCellDestroy={this.filterCellsMap}>
+            onCellDestroy={this.filterCellsMap}
+            onColorMenuOpen={this.openColorMenu}
+            onStyleChange={this.changeCellStyle}
+            onColorMenuClose={this.closeColorMenu}
+            onBackClick={this.backFromColorMenu}
+          >
           </Table>
         </main>
       </div>

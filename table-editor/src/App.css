@@ -20,10 +20,11 @@
 }
 
 .table__cell input {
-  padding: 0;
-  /* border: none; */
+  height: 30px;
+  padding: 0px 16px;
+  width: 140px;
 }
-
+.color-menu,
 .context-menu {
   position: absolute;
   top: calc(100% + 5px);
@@ -32,12 +33,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5px;
   border: 1px solid blue;
   background-color: #ffffff;
   z-index: 1;
 }
 
+.color-menu button,
+.context-menu button {
+  width: 100%;
+  height: 40px;
+}
+
+.color-menu:before,
 .context-menu:before {
   position: absolute;
   content: '';
