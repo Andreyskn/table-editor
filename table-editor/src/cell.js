@@ -37,14 +37,20 @@ export default class Cell extends Component {
     const onStyleChange = this.props.onStyleChange;
     const onColorMenuClose = this.props.onColorMenuClose;
     const onBackClick = this.props.onBackClick;
+    const deletedRow = this.props.deletedRow;
+    const deletedColumn = this.props.deletedColumn;
+    const addedRow = this.props.addedRow;
+    const addedColumn = this.props.addedColumn;
+
+    const isDeleted = this.props.cellAddress[0] === deletedRow || this.props.cellAddress[1] === deletedColumn;
+    const isAdded = this.props.cellAddress[0] === addedRow || this.props.cellAddress[1] === addedColumn;
 
     return (
-      <td className='table__cell'>
+      <td className={`table__cell${isDeleted ? ' deleting' : isAdded ? ' adding' : ''}`}>
         <input 
           type='text'
-          placeholder={cellAddress}
+          // placeholder={cellAddress}
           onContextMenu={(e) => onRightClick(e, cellAddress)}
-          defaultValue='text'
           style={this.state.styles ? { color: this.state.styles.text, backgroundColor: this.state.styles.fill} : null}
         />
         {menuAddress === cellAddress &&

@@ -16,14 +16,29 @@
 .table__cell {
   position: relative;
   padding: 0;
-
 }
 
 .table__cell input {
   height: 30px;
+  max-height: 30px;
   padding: 0px 16px;
-  width: 140px;
+  width: 100px;
+  font-weight: bold;
+  font-size: 15px;
 }
+
+.table__cell.deleting input {
+  animation-name: scaleDown, shrink;
+  animation-duration: .5s, .5s;
+  animation-delay: 0s, .3s;
+  animation-fill-mode: forwards;
+}
+
+.table__cell.adding input {
+  animation-name: grow;
+  animation-duration: .3s;
+}
+
 .color-menu,
 .context-menu {
   position: absolute;
@@ -56,4 +71,34 @@
   bottom: 100%;
   left: 50%;
   transform: translate3d(-50%, 0, 0);
+}
+
+@keyframes scaleDown {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+
+  to {
+    transform: scale3d(0, 0, 0);
+  }
+}
+
+@keyframes shrink {
+  90% {
+    width: 0;
+    max-height: 0;
+    padding: 0;
+  }
+
+  to {
+    position: absolute;
+  }
+}
+
+@keyframes grow {
+  0% {
+    width: 0;
+    max-height: 0;
+    padding: 0;
+  }
 }

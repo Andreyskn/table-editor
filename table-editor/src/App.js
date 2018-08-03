@@ -6,13 +6,13 @@ class App extends Component {
   constructor() {
     super();
 
-    this.initialGrid = [0, 1, 2];
-
     this.state = {
       rows: [0, 1, 2],
       columns: [0, 1, 2],
       deletedRow: null,
       deletedColumn: null,
+      addedRow: null,
+      addedColumn: null,
       menuAddress: null,
       colorMenuAddress: null,
       colorMenuType: null,
@@ -24,7 +24,7 @@ class App extends Component {
     window.addEventListener('click', (e) => {
       if (this.state.menuAddress && e.target.id !== 'back') {
         this.setState({
-          menuAddress: null
+          menuAddress: null,
         });
       }
     });
@@ -32,10 +32,12 @@ class App extends Component {
 
   resetTable = () => {
     this.setState({
-      rows: this.initialGrid,
-      columns: this.initialGrid,
+      rows: [0, 1, 2],
+      columns: [0, 1, 2],
       deletedRow: null,
       deletedColumn: null,
+      addedRow: null,
+      addedColumn: null,
       menuAddress: null,
       colorMenuAddress: null,
       colorMenuType: null,
@@ -45,39 +47,56 @@ class App extends Component {
 
   addColumn = () => {
     let lastItem = this.state.columns.slice(-1);
+    const newItem = ++lastItem;
 
     this.setState({
-      columns: [...this.state.columns, ++lastItem]
+      addedColumn: newItem,
+      columns: [...this.state.columns, newItem]
     });
   }
 
   addRow = () => {
     let lastItem = this.state.rows.slice(-1);
+    const newItem = ++lastItem;
 
     this.setState({
-      rows: [...this.state.rows, ++lastItem]
+      addedRow: newItem,
+      rows: [...this.state.rows, newItem]
     });
   }
 
   deleteColumn = (columnId) => {
     this.setState({
-      columns: this.state.columns.filter(el => el !== columnId),
+      deletedColumn: columnId,
       menuAddress: null
     });
+
+    setTimeout(() => {
+      this.setState({
+        columns: this.state.columns.filter(el => el !== columnId)
+      });
+    }, 1000);
   }
 
   deleteRow = (rowId) => {
     this.setState({
-      rows: this.state.rows.filter(el => el !== rowId),
+      deletedRow: rowId,
       menuAddress: null
     });
+
+    setTimeout(() => {
+      this.setState({
+        rows: this.state.rows.filter(el => el !== rowId)
+      });
+    }, 1000);
   }
 
   openContextMenu = (event, cellAddress) => {
     event.preventDefault();
 
     this.setState({
-      menuAddress: cellAddress
+      menuAddress: cellAddress,
+      colorMenuAddress: null
     });
   }
 
@@ -123,8 +142,6 @@ class App extends Component {
 
 
   render() {
-    // console.log(this.state.menuAddress);
-
     return (
       <div className="App">
         <header className="App-header">

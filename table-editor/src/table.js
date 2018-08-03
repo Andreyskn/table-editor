@@ -19,36 +19,38 @@ export default class Table extends Component {
       onStyleChange,
       onColorMenuClose,
       onBackClick,
+      addedRow,
+      addedColumn,
     } = this.props;
 
     return (
       <table className='table'>
         <tbody className='table__body'>
           {rows.map((rowId) => 
-            (deletedRow !== rowId) ?
-              <tr key={rowId} className='table__row'>
-                {columns.map((columnId) => 
-                  (deletedColumn !== columnId) ?
-                    <Cell 
-                      key={columnId}
-                      cellAddress={[rowId, columnId]}
-                      menuAddress={menuAddress}
-                      onRightClick={onRightClick}
-                      onDeleteColumn={onDeleteColumn}
-                      onDeleteRow={onDeleteRow}
-                      colorMenuAddress={colorMenuAddress}
-                      onColorMenuOpen={onColorMenuOpen}
-                      colorMenuType={colorMenuType}
-                      cellsStyleMap={cellsStyleMap}
-                      onStyleChange={onStyleChange}
-                      onColorMenuClose={onColorMenuClose}
-                      onBackClick={onBackClick}
-                    >
-                    </Cell>
-                  : null
-                )}
-              </tr>
-            : null
+            <tr key={rowId} className='table__row'>
+              {columns.map((columnId) => 
+                <Cell 
+                  key={columnId}
+                  cellAddress={[rowId, columnId]}
+                  menuAddress={menuAddress}
+                  onRightClick={onRightClick}
+                  onDeleteColumn={onDeleteColumn}
+                  onDeleteRow={onDeleteRow}
+                  colorMenuAddress={colorMenuAddress}
+                  onColorMenuOpen={onColorMenuOpen}
+                  colorMenuType={colorMenuType}
+                  cellsStyleMap={cellsStyleMap}
+                  onStyleChange={onStyleChange}
+                  onColorMenuClose={onColorMenuClose}
+                  onBackClick={onBackClick}
+                  deletedColumn={deletedColumn}
+                  deletedRow={deletedRow}
+                  addedRow={addedRow}
+                  addedColumn={addedColumn}
+                >
+                </Cell>
+              )}
+            </tr>
           )}
         </tbody>
       </table>
