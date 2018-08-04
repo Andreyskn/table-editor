@@ -17,16 +17,38 @@ class App extends Component {
       colorMenuAddress: null,
       colorMenuType: null,
       cellsStyleMap: [],
+      highlightRow: null,
+      highlightColumn: null,
     };
   }
 
   componentDidMount() {
     window.addEventListener('click', (e) => {
-      if (this.state.menuAddress && e.target.id !== 'back') {
+      const colorMenuClick = e.target.className.includes('color');
+      const menuIsOpen = this.state.menuAddress || this.state.colorMenuAddress;
+
+      if (menuIsOpen && !colorMenuClick) {
         this.setState({
           menuAddress: null,
+          colorMenuAddress: null
         });
       }
+    });
+  }
+
+  highlightDeletion = (type, index) => {
+    const keyName = `highlight${type}`;
+
+    this.setState({
+      [keyName]: index
+    });
+  }
+
+  removeHighlight = (type) => {
+    const keyName = `highlight${type}`;
+
+    this.setState({
+      [keyName]: null
     });
   }
 
@@ -160,6 +182,8 @@ class App extends Component {
             onStyleChange={this.changeCellStyle}
             onColorMenuClose={this.closeColorMenu}
             onBackClick={this.backFromColorMenu}
+            onDeleteHover={this.highlightDeletion}
+            onDeleteHoverEnd={this.removeHighlight}
           >
           </Table>
         </main>

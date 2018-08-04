@@ -21,6 +21,10 @@ export default class Table extends Component {
       onBackClick,
       addedRow,
       addedColumn,
+      onDeleteHover,
+      onDeleteHoverEnd,
+      highlightRow,
+      highlightColumn,
     } = this.props;
 
     return (
@@ -47,6 +51,10 @@ export default class Table extends Component {
                   deletedRow={deletedRow}
                   addedRow={addedRow}
                   addedColumn={addedColumn}
+                  onDeleteHover={onDeleteHover}
+                  onDeleteHoverEnd={onDeleteHoverEnd}
+                  highlightRow={highlightRow}
+                  highlightColumn={highlightColumn}
                 >
                 </Cell>
               )}

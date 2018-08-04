@@ -41,13 +41,20 @@ export default class Cell extends Component {
     const deletedColumn = this.props.deletedColumn;
     const addedRow = this.props.addedRow;
     const addedColumn = this.props.addedColumn;
+    const onDeleteHover = this.props.onDeleteHover;
+    const onDeleteHoverEnd = this.props.onDeleteHoverEnd;
+    const highlightRow = this.props.highlightRow;
+    const highlightColumn = this.props.highlightColumn;
 
     const isDeleted = this.props.cellAddress[0] === deletedRow || this.props.cellAddress[1] === deletedColumn;
     const isAdded = this.props.cellAddress[0] === addedRow || this.props.cellAddress[1] === addedColumn;
 
+    const isHighlighted = this.props.cellAddress[0] === highlightRow || this.props.cellAddress[1] === highlightColumn;
+
     return (
       <td className={`table__cell${isDeleted ? ' deleting' : isAdded ? ' adding' : ''}`}>
         <input 
+          className={isHighlighted ? 'highlighted' : null}
           type='text'
           // placeholder={cellAddress}
           onContextMenu={(e) => onRightClick(e, cellAddress)}
@@ -58,7 +65,10 @@ export default class Cell extends Component {
             cellAddress={cellAddress}
             onDeleteColumn={onDeleteColumn}
             onDeleteRow={onDeleteRow}
-            onColorMenuOpen={onColorMenuOpen}>
+            onColorMenuOpen={onColorMenuOpen}
+            onDeleteHover={onDeleteHover}
+            onDeleteHoverEnd={onDeleteHoverEnd}
+            >
           </ContextMenu>
         }
         {colorMenuAddress === cellAddress &&
