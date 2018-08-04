@@ -75,7 +75,7 @@ class App extends Component {
       this.setState({
         columns: this.state.columns.filter(el => el !== columnId)
       });
-    }, 1000);
+    }, 800);
   }
 
   deleteRow = (rowId) => {
@@ -88,7 +88,7 @@ class App extends Component {
       this.setState({
         rows: this.state.rows.filter(el => el !== rowId)
       });
-    }, 1000);
+    }, 800);
   }
 
   openContextMenu = (event, cellAddress) => {
@@ -122,7 +122,6 @@ class App extends Component {
   changeCellStyle = (cell, type, color) => {
     const styledCells = this.state.cellsStyleMap;
     const inArray = styledCells.filter(el => el.address === cell)[0];
-    let newElt = {};
 
     if (inArray) {
       inArray[type] = color;
@@ -131,6 +130,7 @@ class App extends Component {
         cellsStyleMap: [...this.state.cellsStyleMap.filter(el => el.address !== cell), inArray],
       });
     } else {
+      let newElt = {};
       newElt.address = cell;
       newElt[type] = color;
 
