@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Table from './table';
+import Table from './components/table';
 
 class App extends Component {
   constructor() {
@@ -158,7 +158,6 @@ class App extends Component {
       });
     }
   }
-
 
   render() {
     return (

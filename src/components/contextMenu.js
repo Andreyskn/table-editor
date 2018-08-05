@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import iconText from '../svg/text.svg';
+import iconBkg from '../svg/background.svg';
 
 export default class ContextMenu extends Component {
   render() {
@@ -33,7 +35,7 @@ export default class ContextMenu extends Component {
             onClick={() => onColorMenuOpen(this.props.cellAddress, 'text')}>
             <img
               className='context-menu__color-icon'
-              src="./svg/text.svg"
+              src={iconText}
               alt="" />
           </button>
           <button
@@ -41,7 +43,7 @@ export default class ContextMenu extends Component {
             onClick={() => onColorMenuOpen(this.props.cellAddress, 'fill')}>
             <img
               className='context-menu__color-icon'
-              src="./svg/background.svg"
+              src={iconBkg}
               alt="" />
           </button>
         </div>

@@ -27,29 +27,31 @@ export default class Cell extends Component {
 
   render() {
     const cellAddress = `${this.props.cellAddress}`;
-    const menuAddress = this.props.menuAddress;
-    const onRightClick = this.props.onRightClick;
-    const onDeleteColumn = this.props.onDeleteColumn;
-    const onDeleteRow = this.props.onDeleteRow;
-    const colorMenuAddress = this.props.colorMenuAddress;
-    const onColorMenuOpen = this.props.onColorMenuOpen;
-    const colorMenuType = this.props.colorMenuType;
-    const onStyleChange = this.props.onStyleChange;
-    const onColorMenuClose = this.props.onColorMenuClose;
-    const onBackClick = this.props.onBackClick;
-    const deletedRow = this.props.deletedRow;
-    const deletedColumn = this.props.deletedColumn;
-    const addedRow = this.props.addedRow;
-    const addedColumn = this.props.addedColumn;
-    const onDeleteHover = this.props.onDeleteHover;
-    const onDeleteHoverEnd = this.props.onDeleteHoverEnd;
-    const highlightRow = this.props.highlightRow;
-    const highlightColumn = this.props.highlightColumn;
+    const {
+      menuAddress,
+      onRightClick,
+      onDeleteColumn,
+      onDeleteRow,
+      colorMenuAddress,
+      onColorMenuOpen,
+      colorMenuType,
+      onStyleChange,
+      onColorMenuClose,
+      onBackClick,
+      deletedRow,
+      deletedColumn,
+      addedRow,
+      addedColumn,
+      onDeleteHover,
+      onDeleteHoverEnd,
+      highlightRow,
+      highlightColumn,
+    } = this.props;
 
-    const isDeleted = this.props.cellAddress[0] === deletedRow || this.props.cellAddress[1] === deletedColumn;
-    const isAdded = this.props.cellAddress[0] === addedRow || this.props.cellAddress[1] === addedColumn;
-
-    const isHighlighted = this.props.cellAddress[0] === highlightRow || this.props.cellAddress[1] === highlightColumn;
+    const cellAddressArr = this.props.cellAddress;
+    const isDeleted = cellAddressArr[0] === deletedRow || cellAddressArr[1] === deletedColumn;
+    const isAdded = cellAddressArr[0] === addedRow || cellAddressArr[1] === addedColumn;
+    const isHighlighted = cellAddressArr[0] === highlightRow || cellAddressArr[1] === highlightColumn;
 
     return (
       <td className={`table__cell${isDeleted ? ' deleting' : isAdded ? ' adding' : ''}`}>

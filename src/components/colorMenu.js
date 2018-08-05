@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
+import iconBack from '../svg/back.svg';
+import iconClose from '../svg/close.svg';
 
 export default class ColorMenu extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = this.props;
-  }
-
   onInput = (e) => {
     const value = e.target.value;
     const {
       currentCell,
       colorMenuType,
       onStyleChange,
-    } = this.state;
+    } = this.props;
 
     onStyleChange(currentCell, colorMenuType, value);
   }
@@ -25,7 +21,7 @@ export default class ColorMenu extends Component {
       onStyleChange,
       onColorMenuClose,
       onBackClick,
-    } = this.state;
+    } = this.props;
 
     return (
       <div className='color-menu'>
@@ -36,7 +32,7 @@ export default class ColorMenu extends Component {
             onClick={() => onBackClick(currentCell)}>
             <img
               className='color-menu__color-icon'
-              src="./svg/back.svg"
+              src={iconBack}
               alt=""/>
         </button>
           <button
@@ -44,7 +40,7 @@ export default class ColorMenu extends Component {
             onClick={onColorMenuClose}>
             <img
               className='color-menu__color-icon'
-              src="./svg/close.svg"
+              src={iconClose}
               alt="" />
         </button>
         </div>
