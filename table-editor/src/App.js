@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
 import Table from './table';
 
 class App extends Component {
   constructor() {
     super();
 
-    this.state = {
+    this.initialState = {
       rows: [0, 1, 2],
       columns: [0, 1, 2],
       deletedRow: null,
@@ -20,6 +19,8 @@ class App extends Component {
       highlightRow: null,
       highlightColumn: null,
     };
+
+    this.state = this.initialState ;
   }
 
   componentDidMount() {
@@ -53,17 +54,13 @@ class App extends Component {
   }
 
   resetTable = () => {
+    const lastId = Math.max(...this.state.rows, ...this.state.columns);
+    const newGrid = [lastId + 1, lastId + 2, lastId + 3]; 
+
     this.setState({
-      rows: [0, 1, 2],
-      columns: [0, 1, 2],
-      deletedRow: null,
-      deletedColumn: null,
-      addedRow: null,
-      addedColumn: null,
-      menuAddress: null,
-      colorMenuAddress: null,
-      colorMenuType: null,
-      cellsStyleMap: [],
+      ...this.initialState,
+      rows: newGrid,
+      columns: newGrid
     });
   }
 

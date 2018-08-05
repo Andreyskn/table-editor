@@ -27,16 +27,24 @@ export default class ContextMenu extends Component {
           >
           Delete row
         </button>
-        <button
-          className='context-menu__color-btn'
-          onClick={() => onColorMenuOpen(this.props.cellAddress, 'text')}>
-          Color
-        </button>
-        <button
-          className='context-menu__color-btn'
-          onClick={() => onColorMenuOpen(this.props.cellAddress, 'fill')}>
-          Fill
-        </button>
+        <div className='context-menu__wrapper'>
+          <button
+            className='context-menu__color-btn'
+            onClick={() => onColorMenuOpen(this.props.cellAddress, 'text')}>
+            <img
+              className='context-menu__color-icon'
+              src="./svg/text.svg"
+              alt="" />
+          </button>
+          <button
+            className='context-menu__color-btn'
+            onClick={() => onColorMenuOpen(this.props.cellAddress, 'fill')}>
+            <img
+              className='context-menu__color-icon'
+              src="./svg/background.svg"
+              alt="" />
+          </button>
+        </div>
       </div>
     );
   }
