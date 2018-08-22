@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ContextMenu from './contextMenu';
 import ColorMenu from './colorMenu';
 
-export default class Cell extends Component {
+class Cell extends Component {
   constructor(props) {
     super(props);
 
@@ -25,25 +26,20 @@ export default class Cell extends Component {
     }
   }
 
+  onRightClick = (e, address) => {
+    e.preventDefault();
+    this.props.dispatch({ type: 'OPEN_CONTEXT_MENU', payload: { address } });
+  }
+
   render() {
     const cellAddress = `${this.props.cellAddress}`;
     const {
       menuAddress,
-      onRightClick,
-      onDeleteColumn,
-      onDeleteRow,
       colorMenuAddress,
-      onColorMenuOpen,
-      colorMenuType,
-      onStyleChange,
-      onColorMenuClose,
-      onBackClick,
       deletedRow,
       deletedColumn,
       addedRow,
       addedColumn,
-      onDeleteHover,
-      onDeleteHoverEnd,
       highlightRow,
       highlightColumn,
     } = this.props;
@@ -59,31 +55,30 @@ export default class Cell extends Component {
           className={isHighlighted ? 'highlighted' : null}
           type='text'
           // placeholder={cellAddress}
-          onContextMenu={(e) => onRightClick(e, cellAddress)}
+          onContextMenu={(e) => this.onRightClick(e, cellAddress)}
           style={this.state.styles ? { color: this.state.styles.text, backgroundColor: this.state.styles.fill} : null}
         />
         {menuAddress === cellAddress &&
-          <ContextMenu 
-            cellAddress={cellAddress}
-            onDeleteColumn={onDeleteColumn}
-            onDeleteRow={onDeleteRow}
-            onColorMenuOpen={onColorMenuOpen}
-            onDeleteHover={onDeleteHover}
-            onDeleteHoverEnd={onDeleteHoverEnd}
-            >
-          </ContextMenu>
+          <ContextMenu cellAddress={cellAddress} />
         }
         {colorMenuAddress === cellAddress &&
-          <ColorMenu
-            currentCell={cellAddress}
-            colorMenuType={colorMenuType}
-            onStyleChange={onStyleChange}
-            onColorMenuClose={onColorMenuClose}
-            onBackClick={onBackClick}
-            >
-          </ColorMenu>
+          <ColorMenu cellAddress={cellAddress} />
         }
       </td>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  highlightRow: state.highlightRow,
+  highlightColumn: state.highlightColumn,
+  menuAddress: state.menuAddress,
+  colorMenuAddress: state.colorMenuAddress,
+  addedRow: state.addedRow,
+  addedColumn: state.addedColumn,
+  cellsStyleMap: state.cellsStyleMap,
+  deletedRow: state.deletedRow,
+  deletedColumn: state.deletedColumn,
+});
+
+export default connect(mapStateToProps)(Cell)

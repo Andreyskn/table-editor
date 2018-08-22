@@ -1,30 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Cell from './cell';
 
-export default class Table extends Component {
+class Table extends Component {
   render() {
     const {
       rows,
       columns,
-      menuAddress,
-      onRightClick,
-      onDeleteColumn,
-      deletedColumn,
-      onDeleteRow,
-      deletedRow,
-      colorMenuAddress,
-      onColorMenuOpen,
-      colorMenuType,
-      cellsStyleMap,
-      onStyleChange,
-      onColorMenuClose,
-      onBackClick,
-      addedRow,
-      addedColumn,
-      onDeleteHover,
-      onDeleteHoverEnd,
-      highlightRow,
-      highlightColumn,
     } = this.props;
 
     return (
@@ -36,27 +18,7 @@ export default class Table extends Component {
                 <Cell 
                   key={columnId}
                   cellAddress={[rowId, columnId]}
-                  menuAddress={menuAddress}
-                  onRightClick={onRightClick}
-                  onDeleteColumn={onDeleteColumn}
-                  onDeleteRow={onDeleteRow}
-                  colorMenuAddress={colorMenuAddress}
-                  onColorMenuOpen={onColorMenuOpen}
-                  colorMenuType={colorMenuType}
-                  cellsStyleMap={cellsStyleMap}
-                  onStyleChange={onStyleChange}
-                  onColorMenuClose={onColorMenuClose}
-                  onBackClick={onBackClick}
-                  deletedColumn={deletedColumn}
-                  deletedRow={deletedRow}
-                  addedRow={addedRow}
-                  addedColumn={addedColumn}
-                  onDeleteHover={onDeleteHover}
-                  onDeleteHoverEnd={onDeleteHoverEnd}
-                  highlightRow={highlightRow}
-                  highlightColumn={highlightColumn}
-                >
-                </Cell>
+                />
               )}
             </tr>
           )}
@@ -65,3 +27,10 @@ export default class Table extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  columns: state.columns,
+  rows: state.rows
+});
+
+export default connect(mapStateToProps)(Table)
