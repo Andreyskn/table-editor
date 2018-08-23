@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import Table from './components/table';
 import { addColumn, addRow, resetTable } from './store/actions/gridActions';
+import { closeAllMenues } from './store/actions/menuActions';
 
 class App extends Component {
   componentDidMount() {
@@ -12,7 +13,7 @@ class App extends Component {
       const menuIsOpen = state.menuAddress || state.colorMenuAddress;
 
       if (menuIsOpen && !colorMenuClick) {
-        store.dispatch({ type: 'CLOSE_ALL_MENUES' });
+        closeAllMenues(store.dispatch);
       }
     });
   }
