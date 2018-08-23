@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import iconText from '../svg/text.svg';
 import iconBkg from '../svg/background.svg';
-import { deleteColumn, deleteRow } from '../store/actions/actions';
+import { deleteColumn, deleteRow, highlightDeletion, removeHighlight } from '../store/actions/gridActions';
+import { openColorMenu } from '../store/actions/menuActions';
 
 class ContextMenu extends Component {
   render() {
@@ -16,22 +17,22 @@ class ContextMenu extends Component {
       <div className='context-menu'>
         <button
           onClick={() => deleteColumn(dispatch, columnId)}
-          onMouseEnter={() => this.props.dispatch({type: 'HIGHLIGHT_DELETION', payload: {type: 'Column', index: columnId}})}
-          onMouseLeave={() => this.props.dispatch({ type: 'REMOVE_HIGHLIGHT', payload: { type: 'Column' } })}
+          onMouseEnter={() => highlightDeletion(dispatch, 'Column', columnId)}
+          onMouseLeave={() => removeHighlight(dispatch, 'Column')}
           >
           Delete column
         </button>
         <button 
           onClick={() => deleteRow(dispatch, rowId)}
-          onMouseEnter={() => this.props.dispatch({ type: 'HIGHLIGHT_DELETION', payload: { type: 'Row', index: rowId } })}
-          onMouseLeave={() => this.props.dispatch({ type: 'REMOVE_HIGHLIGHT', payload: { type: 'Row' } })}
+          onMouseEnter={() => highlightDeletion(dispatch, 'Row', rowId)}
+          onMouseLeave={() => removeHighlight(dispatch, 'Row')}
           >
           Delete row
         </button>
         <div className='context-menu__wrapper'>
           <button
             className='context-menu__color-btn'
-            onClick={() => this.props.dispatch({ type: 'OPEN_COLOR_MENU', payload: { type: 'text', address: cellAddress }})}>
+            onClick={() => openColorMenu(dispatch, cellAddress, 'text')}>
             <img
               className='context-menu__color-icon'
               src={iconText}
@@ -39,7 +40,7 @@ class ContextMenu extends Component {
           </button>
           <button
             className='context-menu__color-btn'
-            onClick={() => this.props.dispatch({ type: 'OPEN_COLOR_MENU', payload: { type: 'fill', address: cellAddress } })}>
+            onClick={() => openColorMenu(dispatch, cellAddress, 'fill')}>
             <img
               className='context-menu__color-icon'
               src={iconBkg}

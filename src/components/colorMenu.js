@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import iconBack from '../svg/back.svg';
 import iconClose from '../svg/close.svg';
+import { changeCellStyle } from '../store/actions/gridActions';
+import { backFromColorMenu, closeColorMenu } from '../store/actions/menuActions';
 
 class ColorMenu extends Component {
   onInput = (e) => {
@@ -12,14 +14,7 @@ class ColorMenu extends Component {
       dispatch,
     } = this.props;
 
-    dispatch({
-      type: 'CHANGE_CELL_STYLE',
-      payload: {
-        address: cellAddress,
-        type: colorMenuType,
-        color
-      }
-    });
+    changeCellStyle(dispatch, cellAddress, colorMenuType, color);
   }
 
   render() {
@@ -35,10 +30,7 @@ class ColorMenu extends Component {
           <button
             id='back'
             className='color-menu__btn-back'
-            onClick={() => dispatch({ 
-              type: 'BACK_FROM_COLOR_MENU',
-              payload: { address: cellAddress } 
-            })}>
+            onClick={() => backFromColorMenu(dispatch, cellAddress)}>
             <img
               className='color-menu__color-icon'
               src={iconBack}
@@ -46,7 +38,7 @@ class ColorMenu extends Component {
         </button>
           <button
             className='color-menu__btn-close'
-            onClick={() => dispatch({ type: 'CLOSE_COLOR_MENU' })}>
+            onClick={() => closeColorMenu(dispatch)}>
             <img
               className='color-menu__color-icon'
               src={iconClose}
@@ -55,42 +47,21 @@ class ColorMenu extends Component {
         </div>
         <button
           className='color-menu__btn-color'
-          onClick={() => dispatch({ 
-            type: 'CHANGE_CELL_STYLE',
-            payload: { 
-              address: cellAddress,
-              type: colorMenuType,
-              color: 'red'
-            } 
-          })}
+          onClick={() => changeCellStyle(dispatch, cellAddress, colorMenuType, 'red')}
           style={{color: 'red'}}
           >
           Red
         </button>
         <button
           className='color-menu__btn-color'
-          onClick={() => dispatch({
-            type: 'CHANGE_CELL_STYLE',
-            payload: {
-              address: cellAddress,
-              type: colorMenuType,
-              color: 'green'
-            }
-          })}
+          onClick={() => changeCellStyle(dispatch, cellAddress, colorMenuType, 'green')}
           style={{ color: 'green' }}
           >
           Green
         </button>
         <button
           className='color-menu__btn-color'
-          onClick={() => dispatch({
-            type: 'CHANGE_CELL_STYLE',
-            payload: {
-              address: cellAddress,
-              type: colorMenuType,
-              color: 'black'
-            }
-          })}
+          onClick={() => changeCellStyle(dispatch, cellAddress, colorMenuType, 'black')}
           >
           Black
         </button>
@@ -106,7 +77,7 @@ class ColorMenu extends Component {
 }
 
 const mapStateToProps = state => ({
-  colorMenuType: state.colorMenuType,
+  colorMenuType: state.menu.colorMenuType,
 });
 
 export default connect(mapStateToProps)(ColorMenu)

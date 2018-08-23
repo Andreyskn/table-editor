@@ -29,8 +29,8 @@ class Table extends Component {
 }
 
 const mapStateToProps = state => ({
-  columns: state.columns,
-  rows: state.rows
+  columns: state.grid.columns,
+  rows: state.grid.rows
 });
 
 export default connect(mapStateToProps)(Table)

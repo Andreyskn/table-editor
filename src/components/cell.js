@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ContextMenu from './contextMenu';
 import ColorMenu from './colorMenu';
+import { openContextMenu } from '../store/actions/menuActions';
 
 class Cell extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Cell extends Component {
 
   onRightClick = (e, address) => {
     e.preventDefault();
-    this.props.dispatch({ type: 'OPEN_CONTEXT_MENU', payload: { address } });
+    openContextMenu(this.props.dispatch, address);
   }
 
   render() {
@@ -70,15 +71,15 @@ class Cell extends Component {
 }
 
 const mapStateToProps = state => ({
-  highlightRow: state.highlightRow,
-  highlightColumn: state.highlightColumn,
-  menuAddress: state.menuAddress,
-  colorMenuAddress: state.colorMenuAddress,
-  addedRow: state.addedRow,
-  addedColumn: state.addedColumn,
-  cellsStyleMap: state.cellsStyleMap,
-  deletedRow: state.deletedRow,
-  deletedColumn: state.deletedColumn,
+  highlightRow: state.grid.highlightRow,
+  highlightColumn: state.grid.highlightColumn,
+  addedRow: state.grid.addedRow,
+  addedColumn: state.grid.addedColumn,
+  cellsStyleMap: state.grid.cellsStyleMap,
+  menuAddress: state.menu.menuAddress,
+  colorMenuAddress: state.menu.colorMenuAddress,
+  deletedRow: state.menu.deletedRow,
+  deletedColumn: state.menu.deletedColumn,
 });
 
 export default connect(mapStateToProps)(Cell)
