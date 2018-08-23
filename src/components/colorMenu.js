@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import iconBack from '../svg/back.svg';
 import iconClose from '../svg/close.svg';
 import { changeCellStyle } from '../store/actions/gridActions';
 import { backFromColorMenu, closeColorMenu } from '../store/actions/menuActions';
 
-class ColorMenu extends Component {
+export default class ColorMenu extends Component {
   onInput = (e) => {
     const color = e.target.value;
     const {
@@ -75,9 +74,3 @@ class ColorMenu extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  colorMenuType: state.menu.colorMenuType,
-});
-
-export default connect(mapStateToProps)(ColorMenu)

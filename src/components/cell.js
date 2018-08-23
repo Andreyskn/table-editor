@@ -43,6 +43,8 @@ class Cell extends Component {
       addedColumn,
       highlightRow,
       highlightColumn,
+      dispatch,
+      colorMenuType,
     } = this.props;
 
     const cellAddressArr = this.props.cellAddress;
@@ -60,10 +62,17 @@ class Cell extends Component {
           style={this.state.styles ? { color: this.state.styles.text, backgroundColor: this.state.styles.fill} : null}
         />
         {menuAddress === cellAddress &&
-          <ContextMenu cellAddress={cellAddress} />
+          <ContextMenu 
+            cellAddress={cellAddress}
+            dispatch={dispatch}
+          />
         }
         {colorMenuAddress === cellAddress &&
-          <ColorMenu cellAddress={cellAddress} />
+          <ColorMenu 
+            cellAddress={cellAddress}
+            dispatch={dispatch}
+            colorMenuType={colorMenuType}
+          />
         }
       </td>
     );
@@ -80,6 +89,7 @@ const mapStateToProps = state => ({
   colorMenuAddress: state.menu.colorMenuAddress,
   deletedRow: state.menu.deletedRow,
   deletedColumn: state.menu.deletedColumn,
+  colorMenuType: state.menu.colorMenuType,
 });
 
 export default connect(mapStateToProps)(Cell)

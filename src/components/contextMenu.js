@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import iconText from '../svg/text.svg';
 import iconBkg from '../svg/background.svg';
 import { deleteColumn, deleteRow, highlightDeletion, removeHighlight } from '../store/actions/gridActions';
 import { openColorMenu } from '../store/actions/menuActions';
 
-class ContextMenu extends Component {
+export default class ContextMenu extends Component {
   render() {
     const cellAddress = this.props.cellAddress;
     const addressArray = cellAddress.split(',')
@@ -51,5 +50,3 @@ class ContextMenu extends Component {
     );
   }
 }
-
-export default connect()(ContextMenu)
